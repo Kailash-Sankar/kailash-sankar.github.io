@@ -1,14 +1,16 @@
+const primaryColor = "#109dc8";
+
 const particleConfig = {
   particles: {
     number: {
-      value: 60,
+      value: 50,
       density: {
         enable: true,
         value_area: 1000,
       },
     },
     color: {
-      value: "#00a02d",
+      value: primaryColor,
     },
     shape: {
       type: "circle",
@@ -48,7 +50,7 @@ const particleConfig = {
     line_linked: {
       enable: true,
       distance: 110.48066982851817,
-      color: "#04fc22",
+      color: primaryColor,
       opacity: 0.40246529723245905,
       width: 1.1048066982851816,
     },

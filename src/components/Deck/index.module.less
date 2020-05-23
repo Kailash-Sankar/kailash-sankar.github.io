@@ -1,0 +1,56 @@
+@import "colors.less";
+
+.container {
+  color: @txt-color;
+  margin: 1%;
+}
+
+.title {
+  margin: 10px 0px;
+  font-size: 2em;
+  font-weight: 600;
+  border-bottom: 1px solid @border-alpha;
+  transition: all 0.4s ease-in;
+  cursor: pointer;
+}
+
+.subtitle {
+  font-size: 0.8em;
+  margin-bottom: 6px;
+  margin-top: -9px;
+  color: @dark-alpha;
+}
+
+.description {
+  font-size: 1.15em;
+  margin-bottom: 20px;
+  &:after {
+    content: "";
+    width: 10px;
+    height: 1px;
+    background-color: @border-alpha;
+    position: relative;
+  }
+}
+
+.link {
+  border-bottom: 1px solid @dark-alpha;
+  width: 60px;
+  margin: auto;
+  text-align: center;
+}
+
+.box {
+  transition: all 0.4s ease-in;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+
+  &:hover {
+    background-color: @dark-highlight;
+    border: 1px solid @dark-alpha;
+  }
+  &:hover .title {
+    color: @alt-highlight;
+  }
+}

@@ -7,7 +7,7 @@ import * as styles from "./index.module.less";
 function ParticleWrapper() {
   return (
     <div id="particle_wrapper" className={styles.wrapper}>
-      <Particles height="100vh" width="100vw" params={particleConfig} />
+      <Particles height="99vh" width="99vw" params={particleConfig} />
     </div>
   );
 }

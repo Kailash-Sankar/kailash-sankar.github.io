@@ -1,20 +1,35 @@
-import React, { Suspense } from "react";
-import { HashRouter as Router, Route } from "react-router-dom";
+import React, { Suspense, lazy } from "react";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "@store/root";
 import { connecter } from "@store/base";
-import Home from "./Home";
 
-//const TopBar = lazy(() => import("@components/Navigation/TopBar"));
+import Home from "./Home";
+import { NavBar, PageNotFound } from "@components";
+
+const Projects = lazy(() => import("./Projects"));
+const About = lazy(() => import("./About"));
 
 function App() {
   return (
     <Router>
       <Suspense fallback={<div>loading...</div>}>
-        <Route exact path="/">
-          <Home />
-        </Route>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/projects">
+            <Projects />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="*">
+            <PageNotFound />
+          </Route>
+        </Switch>
       </Suspense>
+      <NavBar />
     </Router>
   );
 }

@@ -1,12 +1,13 @@
 import React from "react";
+import classnames from "classnames";
 import "./index.less";
 
-function GlitchText({ children }) {
-  return <div className="title flow-txt">{children}</div>;
+function GlitchText({ children, type = "default" }) {
+  return <div className={classnames("flow-txt", type)}>{children}</div>;
 }
 
-function Blinker() {
-  return <div className="console">_</div>;
+function Blinker({ type = "default" }) {
+  return <div className={classnames("console", type)}>_</div>;
 }
 
 export { GlitchText, Blinker };
