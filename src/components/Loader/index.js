@@ -7,7 +7,7 @@ const Spinner = () => (
   <div className={classnames(styles.spin, "center-this")}></div>
 );
 
-function Loader({ loading, error, children }) {
+function Loader({ loading = false, error = false, children }) {
   if (loading || error) {
     return (
       <div className={styles.overlay}>

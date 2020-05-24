@@ -32,12 +32,16 @@ code {
   overflow-x: hidden;
 }
 
+.initial-loader {
+  &:extend(.center-this);
+  font-size: 1.5rem;
+}
+
 .flex-hz {
   display: flex;
   flex-direction: row;
-  div {
-    flex: 1;
-  }
+  align-items: center;
+  justify-content: center;
 }
 
 .page {

@@ -6,6 +6,7 @@ import { connecter } from "@store/base";
 
 import Home from "./Home";
 import { NavBar, PageNotFound } from "@components";
+import { Loader } from "@components/";
 
 const Projects = lazy(() => import("./Projects"));
 const About = lazy(() => import("./About"));
@@ -13,7 +14,7 @@ const About = lazy(() => import("./About"));
 function App() {
   return (
     <Router>
-      <Suspense fallback={<div>loading...</div>}>
+      <Suspense fallback={<Loader loading={true} />}>
         <Switch>
           <Route exact path="/">
             <Home />

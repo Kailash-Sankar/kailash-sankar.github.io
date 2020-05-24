@@ -2,6 +2,8 @@ import React from "react";
 import "./index.less";
 import { GlitchText, Blinker } from "@components/GlitchText";
 
+//import { Social } from "../Story";
+
 function Content() {
   return (
     <div className="intro center-this">
