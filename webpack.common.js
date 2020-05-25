@@ -82,6 +82,10 @@ module.exports = {
         use: [
           {
             loader: "file-loader",
+            options: {
+              outputPath: "static/images/",
+              //publicPath: "../images/",
+            },
           },
         ],
       },
