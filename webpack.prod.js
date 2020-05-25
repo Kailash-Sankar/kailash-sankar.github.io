@@ -9,10 +9,10 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 module.exports = merge(common, {
   mode: "production",
   output: {
-    path: __dirname + "/dist",
+    path: __dirname + "/build",
     publicPath: "",
     filename: "static/js/[name].[contenthash:5].js",
-    chunkFilename: "static/js/vendors.[contenthash:5].js"
+    chunkFilename: "static/js/vendors.[contenthash:5].js",
   },
   // minize js and css files
   optimization: {
@@ -23,16 +23,16 @@ module.exports = merge(common, {
           name: "vendors",
           test: /[\\/]node_modules[\\/]/,
           chunks: "all",
-          enforce: true
-        }
-      }
-    }
+          enforce: true,
+        },
+      },
+    },
   },
   plugins: [
     // generate bundle analysis report
     new BundleAnalyzerPlugin({
       analyzerMode: "static",
-      openAnalyzer: false
-    })
-  ]
+      openAnalyzer: false,
+    }),
+  ],
 });
