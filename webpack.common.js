@@ -105,6 +105,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
+      favicon: "./src/images/favicon.ico",
     }),
     new CssExtractPlugin({
       filename: "static/css/[name].[contenthash:5].css",
