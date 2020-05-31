@@ -9,7 +9,7 @@ function Content() {
     <div className="intro center-this">
       <div className="sub-title">Hi, I&apos;m</div>
       <div className="flex-hz">
-        <GlitchText type="large">Kailash Sankar</GlitchText>
+        <GlitchText type="large" text="Kailash Sankar" />
         <Blinker type="large" />
       </div>
 

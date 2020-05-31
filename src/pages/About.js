@@ -7,7 +7,7 @@ function About() {
   return (
     <div className="page">
       <div>
-        <GlitchText type="large">About Me</GlitchText>
+        <GlitchText type="large" text="About Me" />
         <Blinker type="large" />
         <h3>A little bit about me and what I do.</h3>
         <Story />

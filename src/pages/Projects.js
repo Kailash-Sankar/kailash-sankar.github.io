@@ -14,7 +14,7 @@ function Projects({ data, loading, error, init }) {
   return (
     <div className="page">
       <div>
-        <GlitchText type="large">Projects</GlitchText>
+        <GlitchText type="large" text="Projects" />
         <Blinker type="large" />
         <h3>
           Some of the hobby projects I&apos;m working on, pulled from github.
