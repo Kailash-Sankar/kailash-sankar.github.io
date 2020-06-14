@@ -9,6 +9,9 @@ function NavBar() {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/about">About</NavLink>
         <NavLink to="/projects">Projects</NavLink>
+        <a href="https://dev.to/ksankar" target="_blank" rel="noreferrer">
+          Blog
+        </a>
       </nav>
     </div>
   );
