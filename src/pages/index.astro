@@ -54,9 +54,20 @@ const projects = [
         </div>
       </nav>
 
+      <div class="garden-world" aria-hidden="true">
+        <div class="world-sky"></div>
+        <div class="world-sun"></div>
+        <div class="world-moon"></div>
+        <div class="world-cloud world-cloud-one"></div>
+        <div class="world-cloud world-cloud-two"></div>
+        <div class="world-hills"></div>
+        <div class="world-grass world-grass-one"></div>
+        <div class="world-grass world-grass-two"></div>
+        <div class="world-grass world-grass-three"></div>
+      </div>
+
       <main id="top">
         <section class="hero" aria-labelledby="intro-title">
-          <div class="sun" aria-hidden="true"></div>
           <div class="hero-copy">
             <p class="eyebrow">Principal engineer · AI & agent systems</p>
             <h1 id="intro-title">Making useful things,<br /><em>one thoughtful step</em> at a time.</h1>
@@ -65,15 +76,6 @@ const projects = [
               <a class="button button-primary" href="#writing">Read my writing <span aria-hidden="true">↓</span></a>
               <a class="text-link" href="https://github.com/Kailash-Sankar" target="_blank" rel="noreferrer">Find me on GitHub <span aria-hidden="true">↗</span></a>
             </div>
-          </div>
-          <div class="landscape" aria-hidden="true">
-            <div class="cloud cloud-one"></div>
-            <div class="cloud cloud-two"></div>
-            <div class="hill hill-back"></div>
-            <div class="hill hill-front"></div>
-            <div class="grass grass-one"></div>
-            <div class="grass grass-two"></div>
-            <div class="grass grass-three"></div>
           </div>
         </section>
 
@@ -150,6 +152,23 @@ const projects = [
     setTheme(isDark);
     localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light');
   });
+
+  let scrollFrame;
+  const updateGarden = () => {
+    const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollMax > 0 ? window.scrollY / scrollMax : 0;
+    root.style.setProperty('--scene-sun-y', `${progress * 42}%`);
+    root.style.setProperty('--scene-sun-x', `${progress * -20}px`);
+    root.style.setProperty('--scene-cloud-shift', `${progress * 100}px`);
+    root.style.setProperty('--scene-ground-shift', `${progress * 34}px`);
+    root.classList.toggle('dusk', progress > 0.7);
+    scrollFrame = undefined;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateGarden);
+  }, { passive: true });
+  updateGarden();
 </script>
 
 <style>
@@ -160,6 +179,20 @@ const projects = [
   :global(body) { margin: 0; background: #f6f3ec; color: #26332c; font-family: 'DM Sans', sans-serif; }
   :global(a) { color: inherit; text-decoration: none; }
   .site-shell { max-width: 1440px; margin: 0 auto; overflow: hidden; }
+  main, .footer { position: relative; z-index: 1; }
+  .garden-world { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .world-sky { position: absolute; inset: 0; background: linear-gradient(180deg, #f6f3ec 0%, #f3f2e9 44%, #e7eee3 76%, #dfe8dc 100%); transition: background .8s ease; }
+  .world-sun { position: absolute; z-index: 1; width: 190px; height: 190px; top: calc(12% + var(--scene-sun-y, 0%)); right: calc(10% + var(--scene-sun-x, 0px)); border-radius: 50%; background: #e9c987; opacity: .5; transition: top .8s ease, right .8s ease, opacity .8s ease; }
+  .world-moon { position: absolute; z-index: 1; width: 150px; height: 150px; top: 20%; right: 11%; border-radius: 50%; background: #f1e9bd; opacity: 0; box-shadow: -14px 7px 0 0 #17231f; transition: opacity .8s ease; }
+  .world-cloud { position: absolute; z-index: 2; height: 22px; border-radius: 100px; background: rgba(255,255,255,.55); transform: translateX(var(--scene-cloud-shift, 0px)); transition: transform .8s ease; }
+  .world-cloud::before, .world-cloud::after { content: ''; position: absolute; bottom: 0; border-radius: 50%; background: inherit; }
+  .world-cloud::before { width: 46px; height: 46px; left: 24px; }.world-cloud::after { width: 32px; height: 32px; left: 65px; }
+  .world-cloud-one { width: 138px; left: 12%; top: 22%; animation: drift 20s ease-in-out infinite; }.world-cloud-two { width: 96px; right: 13%; top: 35%; opacity: .4; animation: drift 25s ease-in-out -8s infinite; }
+  .world-hills { position: absolute; z-index: 3; left: -10%; bottom: -22%; width: 120%; height: 50%; border-radius: 50% 50% 0 0; background: #b7ceb4; transform: translateY(var(--scene-ground-shift, 0px)) rotate(-2deg); transition: transform .8s ease, background .8s ease; }
+  .world-hills::after { content: ''; position: absolute; right: -8%; bottom: -38%; width: 76%; height: 90%; border-radius: 50% 50% 0 0; background: #92b28e; transform: rotate(4deg); }
+  .world-grass { position: absolute; z-index: 4; bottom: 13%; width: 2px; height: 50px; background: #6e946c; transform-origin: bottom; animation: sway 3s ease-in-out infinite; }
+  .world-grass::after { content: ''; position: absolute; width: 2px; height: 32px; background: inherit; transform: rotate(34deg); transform-origin: bottom; }
+  .world-grass-one { left: 18%; }.world-grass-two { left: 51%; height: 38px; animation-delay: -1s; }.world-grass-three { right: 18%; height: 62px; animation-delay: -.5s; }
   .nav { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(24px, 6vw, 92px); position: relative; z-index: 2; }
   .wordmark { color: #26332c; font-size: 18px; font-weight: 600; letter-spacing: -.05em; }
   .wordmark span { color: #c47f45; }
@@ -205,13 +238,17 @@ const projects = [
   :global(html.dark) .theme-toggle { border-color: #59715e; }
   :global(html.dark) .theme-sun { display: none; }
   :global(html.dark) .theme-moon { display: inline; }
-  :global(html.dark) .sun { width: 190px; height: 190px; right: 8%; top: 16px; background: #f1e9bd; opacity: .9; box-shadow: -18px 8px 0 0 #17231f; }
-  :global(html.dark) .landscape { background: #1d3028; }
-  :global(html.dark) .landscape::before { content: ''; position: absolute; inset: 0; opacity: .75; background-image: radial-gradient(circle at 12% 28%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 25% 18%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 41% 33%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 62% 16%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 76% 35%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 88% 20%, #f5edbf 0 1px, transparent 1.5px); }
-  :global(html.dark) .cloud { opacity: .18; }
-  :global(html.dark) .hill-back { background: #294438; }
-  :global(html.dark) .hill-front { background: #21392e; }
-  :global(html.dark) .grass, :global(html.dark) .grass::after { background: #587c61; }
+  :global(html.dark) .world-sky { background: linear-gradient(180deg, #17231f 0%, #1b2c25 52%, #203b30 100%); }
+  :global(html.dark) .world-sky::before { content: ''; position: absolute; inset: 0; opacity: .7; background-image: radial-gradient(circle at 12% 28%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 25% 18%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 41% 33%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 62% 16%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 76% 35%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 88% 20%, #f5edbf 0 1px, transparent 1.5px); }
+  :global(html.dark) .world-sun { opacity: 0; }
+  :global(html.dark) .world-moon { opacity: .9; }
+  :global(html.dark) .world-cloud { background: rgba(205,218,199,.18); }
+  :global(html.dark) .world-hills { background: #294438; }
+  :global(html.dark) .world-hills::after { background: #21392e; }
+  :global(html.dark) .world-grass, :global(html.dark) .world-grass::after { background: #587c61; }
+  :global(html:not(.dark).dusk) .world-sky { background: linear-gradient(180deg, #eee5da 0%, #e9e7d9 50%, #c8d5c2 100%); }
+  :global(html:not(.dark).dusk) .world-sun { opacity: .22; }
+  :global(html:not(.dark).dusk) .world-hills { background: #a8bda4; }
   :global(html.dark) .writing-card { border-color: #30483a; background: #1e3028; }
   :global(html.dark) .writing-card-featured { background: #294438; border-color: #3d5c49; }
   :global(html.dark) .writing-card:hover { background: #2d4939; border-color: #66836d; }
@@ -220,6 +257,6 @@ const projects = [
   :global(html.dark) .about-section { background: transparent; border-color: #30483a; }
   :global(html.dark) .footer { color: #718c76; }
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } } @keyframes drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(28px); } } @keyframes sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(8deg); } } @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-8px) rotate(8deg); } }
-  @media (max-width: 760px) { .nav { height: 72px; }.nav-links a:nth-child(-n+2) { display: none; }.hero { min-height: 730px; padding-top: 100px; }.sun { right: -100px; top: 75px; width: 230px; height: 230px; }.hero-actions { align-items: flex-start; flex-direction: column; gap: 20px; }.landscape { height: 270px; }.writing-grid { grid-template-columns: 1fr; }.writing-card, .writing-card-featured { min-height: 295px; }.section-heading > .text-link { position: static; display: inline-flex; margin-top: 25px; }.compact-heading { display: block; }.section-note { margin-top: 25px; }.project-row { grid-template-columns: 32px 1fr 24px; }.project-description { display: none; }.about-section { grid-template-columns: 1fr; gap: 28px; }.about-mark { margin-bottom: -10px; }.footer { flex-direction: column; gap: 18px; }.contact-scribble { left: 7%; } }
-  @media (prefers-reduced-motion: reduce) { :global(html) { scroll-behavior: auto; }.hero-copy, .cloud, .grass, .about-mark { animation: none; }.button, .writing-card, .project-row { transition: none; } }
+  @media (max-width: 760px) { .nav { height: 72px; }.nav-links a:nth-child(-n+2) { display: none; }.hero { min-height: 730px; padding-top: 100px; }.world-sun { right: -100px; width: 230px; height: 230px; }.hero-actions { align-items: flex-start; flex-direction: column; gap: 20px; }.writing-grid { grid-template-columns: 1fr; }.writing-card, .writing-card-featured { min-height: 295px; }.section-heading > .text-link { position: static; display: inline-flex; margin-top: 25px; }.compact-heading { display: block; }.section-note { margin-top: 25px; }.project-row { grid-template-columns: 32px 1fr 24px; }.project-description { display: none; }.about-section { grid-template-columns: 1fr; gap: 28px; }.about-mark { margin-bottom: -10px; }.footer { flex-direction: column; gap: 18px; }.contact-scribble { left: 7%; } }
+  @media (prefers-reduced-motion: reduce) { :global(html) { scroll-behavior: auto; }.hero-copy, .world-cloud, .world-grass, .about-mark { animation: none; }.button, .writing-card, .project-row, .world-sun, .world-hills { transition: none; } }
 </style>
