@@ -1,0 +1,225 @@
+---
+const writing = [
+  {
+    date: "Sep 2026",
+    title: "Evaluating an MCP Server",
+    description: "Building an evaluation suite for an MCP server that hands a product’s data to an AI agent.",
+    tags: ["AI", "MCP", "Evals"],
+    href: "https://dev.to/ksankar/evaluating-an-mcp-server-k5b",
+  },
+  {
+    date: "Mar 2026",
+    title: "Defense in Depth: Tenant Isolation for an Agent",
+    description: "Five layers of security designed to prevent cross-tenant data leaks in a code-executing agent.",
+    tags: ["Agents", "AI", "Security"],
+    href: "https://dev.to/ksankar/defense-in-depth-tenant-isolation-for-an-agent-that-executes-code-375j",
+  },
+  {
+    date: "Mar 2026",
+    title: "What I Learned Adding Memory to AI Agents",
+    description: "Notes from building agent memory systems with a lot of prompting, directing, and iteration.",
+    tags: ["AI", "Agents", "Memory"],
+    href: "https://dev.to/ksankar/what-i-learned-adding-memory-to-ai-agents-1eh2",
+  },
+];
+
+const projects = [
+  { name: "PocketMCP", description: "Local-first document search for developer tools.", href: "https://github.com/Kailash-Sankar" },
+  { name: "store-wrap", description: "A small wrapper around browser storage.", href: "https://github.com/Kailash-Sankar/store-wrap" },
+  { name: "More on GitHub", description: "A few experiments, utilities, and unfinished ideas.", href: "https://github.com/Kailash-Sankar" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Kailash Sankar — software engineer, writer, and curious builder." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌾%3C/text%3E%3C/svg%3E" />
+    <title>Kailash Sankar — software engineer & writer</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="wordmark" href="#top" aria-label="Kailash Sankar home"><span>k</span>sankar</a>
+        <div class="nav-links">
+          <a href="#writing">Writing</a>
+          <a href="#work">Work</a>
+          <a href="#contact">Say hello <span aria-hidden="true">↗</span></a>
+          <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+            <span class="theme-sun" aria-hidden="true">☼</span>
+            <span class="theme-moon" aria-hidden="true">☾</span>
+          </button>
+        </div>
+      </nav>
+
+      <main id="top">
+        <section class="hero" aria-labelledby="intro-title">
+          <div class="sun" aria-hidden="true"></div>
+          <div class="hero-copy">
+            <p class="eyebrow">Principal engineer · AI & agent systems</p>
+            <h1 id="intro-title">Making useful things,<br /><em>one thoughtful step</em> at a time.</h1>
+            <p class="intro">I’m Kailash, a principal engineer with 15 years of experience. These days I work on AI agents, evaluation, observability, and the web systems around them.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#writing">Read my writing <span aria-hidden="true">↓</span></a>
+              <a class="text-link" href="https://github.com/Kailash-Sankar" target="_blank" rel="noreferrer">Find me on GitHub <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <div class="landscape" aria-hidden="true">
+            <div class="cloud cloud-one"></div>
+            <div class="cloud cloud-two"></div>
+            <div class="hill hill-back"></div>
+            <div class="hill hill-front"></div>
+            <div class="grass grass-one"></div>
+            <div class="grass grass-two"></div>
+            <div class="grass grass-three"></div>
+          </div>
+        </section>
+
+        <section class="section writing-section" id="writing" aria-labelledby="writing-title">
+          <div class="section-heading">
+            <p class="eyebrow">A few things I’ve been thinking about</p>
+            <h2 id="writing-title">Notes from the field.</h2>
+            <a class="text-link" href="https://dev.to/ksankar" target="_blank" rel="noreferrer">All writing <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="writing-grid">
+            {writing.map((post, index) => (
+              <a class:list={["writing-card", index === 0 && "writing-card-featured"]} href={post.href} target="_blank" rel="noreferrer">
+                <div class="card-meta"><span>{post.date}</span><span>0{index + 1}</span></div>
+                <div>
+                  <h3>{post.title}</h3>
+                  <p>{post.description}</p>
+                </div>
+                <div class="card-footer"><span>{post.tags.join(" · ")}</span><span class="card-arrow" aria-hidden="true">↗</span></div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="section work-section" id="work" aria-labelledby="work-title">
+          <div class="section-heading compact-heading">
+            <div><p class="eyebrow">A small corner of the internet</p><h2 id="work-title">Things I’ve built.</h2></div>
+            <p class="section-note">A few experiments and useful little tools. The full, untidy shelf is over on GitHub.</p>
+          </div>
+          <div class="project-list">
+            {projects.map((project, index) => (
+              <a class="project-row" href={project.href} target="_blank" rel="noreferrer">
+                <span class="project-index">0{index + 1}</span>
+                <span class="project-name">{project.name}</span>
+                <span class="project-description">{project.description}</span>
+                <span class="project-arrow" aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="section about-section" aria-labelledby="about-title">
+          <div class="about-mark" aria-hidden="true">✳</div>
+          <div><p class="eyebrow">A little about me</p><h2 id="about-title">Still curious.<br />Still making.</h2></div>
+          <div class="about-copy"><p>With 15 years in software engineering, I build production systems that are useful, observable, and safe to operate. My current focus is AI agents, evaluation, observability, and scalable web architecture.</p><p>When I’m away from a screen, I’m probably tinkering in my home lab, reading, or walking my dog.</p></div>
+        </section>
+
+        <section class="contact-section" id="contact" aria-labelledby="contact-title">
+          <div class="contact-scribble" aria-hidden="true">↘</div>
+          <p class="eyebrow">Open to a conversation</p>
+          <h2 id="contact-title">Have something<br /><em>interesting in mind?</em></h2>
+          <a class="button button-light" href="mailto:kailash.sankar@outlook.com">Say hello <span aria-hidden="true">↗</span></a>
+        </section>
+      </main>
+
+      <footer class="footer"><span>© {new Date().getFullYear()} Kailash Sankar</span><div><a href="https://www.linkedin.com/in/kailash-sankar/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/Kailash-Sankar" target="_blank" rel="noreferrer">GitHub</a><a href="https://dev.to/ksankar" target="_blank" rel="noreferrer">DEV</a></div></footer>
+    </div>
+  </body>
+</html>
+
+<script>
+  const root = document.documentElement;
+  const toggle = document.querySelector('.theme-toggle');
+  const savedTheme = localStorage.getItem('portfolio-theme');
+
+  const setTheme = (isDark) => {
+    root.classList.toggle('dark', isDark);
+    toggle?.setAttribute('aria-pressed', String(isDark));
+    toggle?.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  };
+
+  setTheme(savedTheme === 'dark');
+  toggle?.addEventListener('click', () => {
+    const isDark = !root.classList.contains('dark');
+    setTheme(isDark);
+    localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light');
+  });
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap');
+
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) { margin: 0; background: #f6f3ec; color: #26332c; font-family: 'DM Sans', sans-serif; }
+  :global(a) { color: inherit; text-decoration: none; }
+  .site-shell { max-width: 1440px; margin: 0 auto; overflow: hidden; }
+  .nav { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(24px, 6vw, 92px); position: relative; z-index: 2; }
+  .wordmark { color: #26332c; font-size: 18px; font-weight: 600; letter-spacing: -.05em; }
+  .wordmark span { color: #c47f45; }
+  .nav-links { display: flex; gap: clamp(18px, 3vw, 44px); color: #69766d; font-size: 13px; }
+  .theme-toggle { width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; position: relative; margin: -7px 0 -7px 4px; border: 1px solid #cfd9cf; border-radius: 50%; background: transparent; color: #c47f45; cursor: pointer; font: 20px/1 'Fraunces', serif; transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+  .theme-toggle:hover { border-color: #c47f45; transform: rotate(12deg); }
+  .theme-moon { display: none; }
+  .nav-links a, .footer a { transition: color .2s ease; }
+  .nav-links a:hover, .footer a:hover, .text-link:hover { color: #c47f45; }
+  .hero { min-height: 800px; position: relative; padding: clamp(76px, 12vw, 160px) clamp(24px, 12vw, 180px) 0; overflow: hidden; }
+  .hero-copy { max-width: 740px; position: relative; z-index: 1; animation: rise .8s ease both; }
+  .eyebrow { margin: 0 0 22px; color: #839188; font: 500 11px/1 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+  h1, h2, h3, p { margin-top: 0; }
+  h1 { color: #26332c; font-size: clamp(48px, 7vw, 92px); line-height: .98; letter-spacing: -.07em; margin-bottom: 30px; font-weight: 600; }
+  h1 em, h2 em { color: #c47f45; font-family: 'Fraunces', serif; font-weight: 500; letter-spacing: -.06em; }
+  .intro { max-width: 420px; color: #68766c; font-size: 17px; line-height: 1.65; }
+  .hero-actions { display: flex; align-items: center; gap: 28px; margin-top: 38px; }
+  .button { display: inline-flex; gap: 20px; align-items: center; padding: 15px 20px; border-radius: 100px; font-size: 13px; line-height: 1; transition: transform .2s ease, box-shadow .2s ease; }
+  .button:hover { transform: translateY(-3px); box-shadow: 0 9px 20px rgba(38,51,44,.1); }
+  .button-primary { background: #26332c; color: #f6f3ec; }
+  .button-light { background: #f6f3ec; color: #26332c; }
+  .text-link { display: inline-flex; align-items: center; color: #526158; font-size: 13px; line-height: 1; border-bottom: 1px solid #bdc9be; padding-bottom: 4px; transition: color .2s ease, border-color .2s ease; }
+  .text-link span { margin-left: 8px; }
+  .landscape { height: 300px; position: absolute; left: 50%; right: 50%; bottom: 0; width: 100vw; margin-left: -50vw; margin-right: -50vw; background: #dfe8dc; }
+  .sun { position: absolute; width: 290px; height: 290px; right: 14%; top: 60px; border-radius: 50%; background: #e9c987; opacity: .55; }
+  .cloud { position: absolute; background: #f6f3ec; border-radius: 100px; opacity: .65; }
+  .cloud::before, .cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; }
+  .cloud-one { width: 150px; height: 24px; left: 13%; top: 41px; animation: drift 18s ease-in-out infinite; }
+  .cloud-one::before { width: 56px; height: 56px; left: 23px; bottom: 0; }.cloud-one::after { width: 38px; height: 38px; left: 70px; bottom: 0; }
+  .cloud-two { width: 100px; height: 16px; right: 15%; top: 80px; opacity: .45; animation: drift 24s ease-in-out -8s infinite; }
+  .cloud-two::before { width: 35px; height: 35px; left: 18px; bottom: 0; }.cloud-two::after { width: 26px; height: 26px; left: 49px; bottom: 0; }
+  .hill { position: absolute; border-radius: 50% 50% 0 0; }.hill-back { width: 68%; height: 240px; left: -8%; bottom: -135px; background: #b7ceb4; transform: rotate(-3deg); }.hill-front { width: 75%; height: 280px; right: -12%; bottom: -170px; background: #92b28e; transform: rotate(4deg); }
+  .grass { position: absolute; bottom: 70px; width: 2px; height: 52px; background: #6e946c; transform-origin: bottom; animation: sway 3s ease-in-out infinite; }.grass::after { content: ''; position: absolute; width: 2px; height: 34px; background: #6e946c; transform: rotate(34deg); transform-origin: bottom; }.grass-one { left: 22%; animation-delay: -.5s; }.grass-two { left: 48%; height: 40px; animation-delay: -1.2s; }.grass-three { right: 21%; height: 64px; animation-delay: -.9s; }
+  .section { padding: clamp(90px, 12vw, 170px) clamp(24px, 12vw, 180px); }.section-heading { position: relative; margin-bottom: 48px; }.section-heading h2, .about-section h2 { font-size: clamp(40px, 5vw, 66px); line-height: 1; letter-spacing: -.065em; margin-bottom: 0; }.section-heading > .text-link { position: absolute; right: 0; bottom: 5px; }
+  .writing-grid { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 16px; }.writing-card { min-height: 350px; border: 1px solid #d7dfd5; border-radius: 4px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; transition: transform .25s ease, background .25s ease, border-color .25s ease; }.writing-card:hover { background: #fbfaf6; border-color: #b4c3b5; transform: translateY(-6px) rotate(-.5deg); }.writing-card-featured { background: #e8efe4; border-color: #d0ddce; }.card-meta, .card-footer { display: flex; align-items: center; justify-content: space-between; color: #849187; font: 11px 'DM Mono', monospace; }.writing-card h3 { max-width: 300px; font-size: 24px; line-height: 1.08; letter-spacing: -.04em; font-weight: 600; }.writing-card p { color: #68766c; font-size: 14px; line-height: 1.55; max-width: 290px; }.card-footer { padding-top: 28px; }.card-arrow, .project-arrow { display: inline-flex; align-items: center; justify-content: center; color: #c47f45; font-size: 18px; line-height: 1; }.work-section { padding-top: 0; }.compact-heading { display: flex; align-items: end; justify-content: space-between; }.section-note { color: #68766c; max-width: 285px; line-height: 1.6; font-size: 14px; margin-bottom: 4px; }.project-list { border-top: 0; }.project-row { display: grid; grid-template-columns: 60px 1.2fr 2fr 30px; gap: 16px; align-items: center; padding: 30px 0; border-bottom: 1px solid #cfd9cf; transition: padding .2s ease, color .2s ease; }.project-row:hover { color: #c47f45; padding-left: 10px; }.project-index { color: #a7b4a8; font: 11px 'DM Mono', monospace; }.project-name { font-size: 19px; font-weight: 600; letter-spacing: -.03em; }.project-description { color: #68766c; font-size: 14px; }.project-arrow { text-align: right; }.about-section { display: grid; grid-template-columns: .45fr 1fr 1fr; gap: 30px; background: transparent; border-top: 1px solid #cfd9cf; align-items: start; }.about-mark { font-size: 42px; color: #c47f45; animation: float 5s ease-in-out infinite; }.about-copy { max-width: 390px; color: #68766c; font-size: 16px; line-height: 1.7; }.about-copy p + p { margin-top: 24px; }.contact-section { position: relative; padding: clamp(90px, 12vw, 145px) 24px; text-align: center; background: #26332c; color: #f6f3ec; overflow: hidden; }.contact-section .eyebrow { color: #9fb19e; }.contact-section h2 { font-size: clamp(48px, 7vw, 86px); line-height: .95; letter-spacing: -.07em; margin: 0 auto 38px; }.contact-scribble { position: absolute; left: 15%; top: 25%; color: #829c80; font-size: 48px; transform: rotate(-25deg); }.footer { display: flex; justify-content: space-between; padding: 28px clamp(24px, 6vw, 92px); color: #8b988d; font: 11px 'DM Mono', monospace; }.footer div { display: flex; gap: 24px; }
+  :global(html.dark) :global(body) { background: #17231f; color: #edf1e8; }
+  :global(html.dark) .wordmark, :global(html.dark) h1, :global(html.dark) h2, :global(html.dark) h3 { color: #edf1e8; }
+  :global(html.dark) .nav-links, :global(html.dark) .intro, :global(html.dark) .writing-card p, :global(html.dark) .project-description, :global(html.dark) .about-copy, :global(html.dark) .section-note { color: #aab8aa; }
+  :global(html.dark) .eyebrow, :global(html.dark) .card-meta, :global(html.dark) .card-footer { color: #8da18e; }
+  :global(html.dark) .text-link { color: #c5d4c4; border-color: #59715e; }
+  :global(html.dark) .button-primary { background: #edf1e8; color: #17231f; }
+  :global(html.dark) .button:hover { box-shadow: 0 9px 20px rgba(0,0,0,.22); }
+  :global(html.dark) .theme-toggle { border-color: #59715e; }
+  :global(html.dark) .theme-sun { display: none; }
+  :global(html.dark) .theme-moon { display: inline; }
+  :global(html.dark) .sun { width: 190px; height: 190px; right: 8%; top: 16px; background: #f1e9bd; opacity: .9; box-shadow: -18px 8px 0 0 #17231f; }
+  :global(html.dark) .landscape { background: #1d3028; }
+  :global(html.dark) .landscape::before { content: ''; position: absolute; inset: 0; opacity: .75; background-image: radial-gradient(circle at 12% 28%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 25% 18%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 41% 33%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 62% 16%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 76% 35%, #f5edbf 0 1px, transparent 1.5px), radial-gradient(circle at 88% 20%, #f5edbf 0 1px, transparent 1.5px); }
+  :global(html.dark) .cloud { opacity: .18; }
+  :global(html.dark) .hill-back { background: #294438; }
+  :global(html.dark) .hill-front { background: #21392e; }
+  :global(html.dark) .grass, :global(html.dark) .grass::after { background: #587c61; }
+  :global(html.dark) .writing-card { border-color: #30483a; background: #1e3028; }
+  :global(html.dark) .writing-card-featured { background: #294438; border-color: #3d5c49; }
+  :global(html.dark) .writing-card:hover { background: #2d4939; border-color: #66836d; }
+  :global(html.dark) .project-list, :global(html.dark) .project-row { border-color: #30483a; }
+  :global(html.dark) .project-index { color: #718c76; }
+  :global(html.dark) .about-section { background: transparent; border-color: #30483a; }
+  :global(html.dark) .footer { color: #718c76; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } } @keyframes drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(28px); } } @keyframes sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(8deg); } } @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-8px) rotate(8deg); } }
+  @media (max-width: 760px) { .nav { height: 72px; }.nav-links a:nth-child(-n+2) { display: none; }.hero { min-height: 730px; padding-top: 100px; }.sun { right: -100px; top: 75px; width: 230px; height: 230px; }.hero-actions { align-items: flex-start; flex-direction: column; gap: 20px; }.landscape { height: 270px; }.writing-grid { grid-template-columns: 1fr; }.writing-card, .writing-card-featured { min-height: 295px; }.section-heading > .text-link { position: static; display: inline-flex; margin-top: 25px; }.compact-heading { display: block; }.section-note { margin-top: 25px; }.project-row { grid-template-columns: 32px 1fr 24px; }.project-description { display: none; }.about-section { grid-template-columns: 1fr; gap: 28px; }.about-mark { margin-bottom: -10px; }.footer { flex-direction: column; gap: 18px; }.contact-scribble { left: 7%; } }
+  @media (prefers-reduced-motion: reduce) { :global(html) { scroll-behavior: auto; }.hero-copy, .cloud, .grass, .about-mark { animation: none; }.button, .writing-card, .project-row { transition: none; } }
+</style>
