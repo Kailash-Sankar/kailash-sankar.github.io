@@ -3,42 +3,57 @@ import { profile } from "../data/profile";
 ---
 
 <section class="section about" aria-labelledby="about-title">
-  <div class="about-head">
-    <!-- A real label rather than mood-setting: this is the one place the
-         focus areas are stated, and labelling it makes them scannable. -->
-    <p class="eyebrow">Current focus</p>
-    <h2 id="about-title">Still curious.<br />Still making.</h2>
-  </div>
+  <!-- Spans the full grid width. The line measures 656px at --step-3, which
+       will not fit a heading column of 439px, so without the full width it
+       re-wraps to the same two lines it had with the hard <br>. -->
+  <h2 id="about-title">Still curious. Still making.</h2>
 
   <div class="about-body">
+    <!-- A real label rather than mood-setting: this is the one place the
+         focus areas are stated, and labelling it makes them scannable. It
+         now sits directly above the line it labels, rather than above the
+         heading, a column and a row away from it. -->
+    <p class="eyebrow">Current focus</p>
     <p class="focus">
       {profile.focusAreas.map((area) => <span class="focus-item">{area}</span>)}
     </p>
+  </div>
 
-    <div class="about-copy">
-      {profile.about.map((paragraph) => <p>{paragraph}</p>)}
-    </div>
+  <div class="about-copy">
+    {profile.about.map((paragraph) => <p>{paragraph}</p>)}
   </div>
 </section>
 
 <style>
   .about {
     display: grid;
-    /* Two columns, so the heading lands on the same left edge as the hero,
+    /* One column, so the heading lands on the same left edge as the hero,
        writing and work sections. This used to be 0.45fr 1fr 1.15fr, whose
        first column existed only to hold a decorative ✳ glyph — 21px of
        ornament reserving ~176px of space and pushing this section's text
-       ~180px right of everything above it. */
-    grid-template-columns: 1fr 1.15fr;
+       ~180px right of everything above it.
+
+       It then became 1fr 1.15fr, which put two short lines of focus areas
+       beside five lines of copy and left a ragged void in the lower left. */
+    grid-template-columns: 1fr;
     gap: 30px;
     align-items: start;
     border-top: 1px solid var(--border);
   }
 
+  /* One line across the full width. The line measures 656px at --step-3,
+     which will not fit a heading column of 439px, so without the full width
+     it re-wraps to the same two lines it had with the hard <br>. */
+  .about h2 {
+    margin-bottom: 0;
+  }
+
+  /* Holds the eyebrow and the focus line only. No gap between them: the
+     eyebrow already carries its own 22px bottom margin, which is what keeps
+     the label close to the line it labels. */
   .about-body {
     display: flex;
     flex-direction: column;
-    gap: 30px;
   }
 
   /* Written as a single line rather than bulleted: these describe one body of
@@ -57,29 +72,46 @@ import { profile } from "../data/profile";
     white-space: nowrap;
   }
 
+  /* The separator's spaces are the only break opportunities on this line. It
+     is generated content on a nowrap item, so it inherits `nowrap` and its
+     spaces stop being break opportunities — which makes the whole line
+     unbreakable. Its min-content then equals the full line width (407px at a
+     390px viewport) and blows the grid track out through the section's right
+     padding, silently clipping the line and the copy beside it. Resetting
+     white-space on the generated content restores breaking at the separators,
+     which is the intent, without letting an individual area break. */
   .focus-item + :global(.focus-item)::before {
     content: " · ";
+    white-space: normal;
     color: var(--text-faint);
   }
 
+  /* The copy sits below the focus line, as two columns rather than one long
+     46ch measure in a 973px content box, which left a 580px void to its
+     right. Each column lands at ~471px, roughly 55 characters — still inside
+     a comfortable measure, and enough to fill the width. */
   .about-copy {
-    max-width: 46ch;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
     color: var(--text-muted);
     font-size: var(--step-0);
     line-height: 1.7;
   }
 
-  .about-copy p + p {
-    margin-top: 20px;
+  .about-copy p {
+    margin: 0;
   }
 
-  .about-copy p:last-child {
-    margin-bottom: 0;
+  @media (max-width: 900px) {
+    .about-copy {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
   }
 
   @media (max-width: 760px) {
     .about {
-      grid-template-columns: 1fr;
       gap: 28px;
     }
   }
