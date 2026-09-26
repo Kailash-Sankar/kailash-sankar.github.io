@@ -86,14 +86,10 @@ import { profile } from "../data/profile";
     color: var(--text-faint);
   }
 
-  /* The copy sits below the focus line, as two columns rather than one long
-     46ch measure in a 973px content box, which left a 580px void to its
-     right. Each column lands at ~471px, roughly 55 characters — still inside
-     a comfortable measure, and enough to fill the width. */
+  /* A single measure, with the paragraphs stacked. Side by side they read as
+     two independent columns rather than one continuous thought. */
   .about-copy {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px;
+    max-width: 46ch;
     color: var(--text-muted);
     font-size: var(--step-0);
     line-height: 1.7;
@@ -103,11 +99,8 @@ import { profile } from "../data/profile";
     margin: 0;
   }
 
-  @media (max-width: 900px) {
-    .about-copy {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
+  .about-copy p + p {
+    margin-top: 20px;
   }
 
   @media (max-width: 760px) {
