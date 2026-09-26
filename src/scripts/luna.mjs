@@ -56,22 +56,25 @@ const POINTS = [
 
   // Belly.
   [84, 70],
-  [68, 78],
-  [58, 86],
+  [70, 71],
+  [58, 73],
 
-  // Hind leg, straight to the ground.
+  // Hind leg, the same depth as the front one.
   [58, GROUND],
   [46, GROUND],
 
-  // Up the back of the hind leg and around a full haunch. The run back to
-  // the first point is what closes the body without a tail.
-  [46, 72],
-  [38, 70],
-  [32, 67],
-  // Rounded rear of the haunch, deliberately as thick as the tail base. If the
-  // rump tapers to a point the tail cannot join it without leaving a step.
-  [27, 60],
-  [30, 55],
+  // Up the back of the hind leg and around the haunch. The haunch sits on the
+  // leg rather than cantilevering far behind it, which is what made the back
+  // look stretched. The run back to the first point is what closes the body
+  // without a tail.
+  [46, 74],
+  [40, 72],
+  [32, 68],
+  // Rear of the haunch. Two points at nearly the same x rather than a single
+  // bulge, so the buttock is a full-height mass instead of a long taper —
+  // and roughly as thick as the tail base, so the two join without a step.
+  [28, 62],
+  [29, 55],
 ];
 
 /** Catmull-Rom to cubic bezier, closed loop. */
@@ -111,12 +114,12 @@ const body = toPath(POINTS);
  *  base has to be buried by more than that at both extremes of the animation
  *  or the join opens a notch. Narrowing the base and deepening the haunch buys
  *  that margin without a visible step. */
-const TAIL_D = "M33 64 C20 64 8 58 2 50 C1 46 4 43 7 46 C12 54 22 57 33 57 Z";
+const TAIL_D = "M33 66 C20 67 8 60 2 50 C1 46 4 43 7 46 C12 54 22 56 33 56 Z";
 
 /** The wagging pivot, in SVG user units. It must sit inside the haunch:
  *  rotating about a point on the topline swings the tail's base out of the
  *  body and opens a notch at the join. */
-const TAIL_PIVOT = [31, 60];
+const TAIL_PIVOT = [32, 61];
 
 /** Axis-aligned bounds of a path built only from M/C commands. */
 const boundsOf = (d) => {
