@@ -1,0 +1,48 @@
+---
+import { profile } from "../data/profile";
+---
+
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="contact-card">
+    <p class="eyebrow">Open to a conversation</p>
+
+    <h2 id="contact-title">
+      Have something<br /><em>interesting in mind?</em>
+    </h2>
+
+    <a class="button button--primary" href={`mailto:${profile.email}`}>
+      Say hello <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Shares the card tokens (surface, radius, shadow) with the writing cards
+     so it reads as part of the same system, but is deliberately NOT a .card:
+     that class carries a hover treatment, and this is a panel, not a link.
+     No border either, so nothing about it reads as interactive. */
+  .contact-card {
+    max-width: 34rem;
+    padding: clamp(32px, 4.5vw, 56px);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--card-shadow);
+  }
+
+  .contact h2 {
+    max-width: 16ch;
+    margin: 0 0 30px;
+    font-size: var(--step-2);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: var(--track-tight);
+  }
+
+  .contact h2 em {
+    color: var(--accent);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+  }
+</style>

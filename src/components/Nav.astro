@@ -1,0 +1,108 @@
+---
+import { navLinks, profile } from "../data/profile";
+---
+
+<nav class="nav" aria-label="Main navigation">
+  <a class="wordmark" href="#top" aria-label={`${profile.name} home`}>
+    <span>k</span>sankar
+  </a>
+
+  <div class="nav-links">
+    {
+      navLinks.map((link) => (
+        <a href={link.href}>
+          {link.label}
+          {"external" in link && link.external && <span aria-hidden="true">↗</span>}
+        </a>
+      ))
+    }
+    <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle colour theme">
+      <span class="theme-sun" aria-hidden="true">☼</span>
+      <span class="theme-moon" aria-hidden="true">☾</span>
+    </button>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 90px;
+    padding: 0 var(--gutter-tight);
+  }
+
+  .wordmark {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.05em;
+  }
+
+  .wordmark span {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: clamp(18px, 3vw, 44px);
+    color: var(--text-muted);
+    font-size: var(--step--1);
+  }
+
+  .nav-links a {
+    transition: color var(--t-fast) var(--ease);
+  }
+
+  .nav-links a:hover {
+    color: var(--accent);
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin: -7px 0 -7px 4px;
+    padding: 0;
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--accent);
+    font: 20px/1 var(--font-serif);
+    cursor: pointer;
+    transition:
+      border-color var(--t-fast) var(--ease),
+      transform var(--t-fast) var(--ease);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    transform: rotate(12deg);
+  }
+
+  .theme-moon {
+    display: none;
+  }
+
+  :global([data-theme="dark"]) .theme-sun {
+    display: none;
+  }
+
+  :global([data-theme="dark"]) .theme-moon {
+    display: inline;
+  }
+
+  @media (max-width: 760px) {
+    .nav {
+      height: 72px;
+    }
+
+    .nav-links a:nth-child(-n + 2) {
+      display: none;
+    }
+  }
+</style>

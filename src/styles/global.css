@@ -1,0 +1,425 @@
+/* =========================================================================
+   Design tokens
+   Every colour in the site resolves through these custom properties.
+   Re-theming the site means editing this block — nothing else.
+   ========================================================================= */
+
+:root {
+  /* Type */
+  --font-sans: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Layout */
+  --shell-max: 1440px;
+  --gutter: clamp(24px, 12vw, 180px);
+  --gutter-tight: clamp(24px, 6vw, 92px);
+  --section-pad: clamp(90px, 12vw, 170px);
+  --radius: 4px;
+
+  /* Type scale — a 1.25 ratio, fluid between 380px and 1440px viewports.
+     Every heading and body size in the site resolves through these. */
+  --step-0: clamp(1rem, 0.97rem + 0.16vw, 1.0625rem); /* body      16-17  */
+  --step-1: clamp(1.1875rem, 1.12rem + 0.34vw, 1.375rem); /* lead    19-22  */
+  --step-2: clamp(1.5rem, 1.37rem + 0.65vw, 1.9375rem); /* card h3  24-31  */
+  --step-3: clamp(2.5rem, 2.05rem + 2.25vw, 4.125rem); /* h2      40-66  */
+  --step-4: clamp(3rem, 2.1rem + 4.5vw, 5.75rem); /* h1       48-92  */
+  --step--1: clamp(0.8125rem, 0.8rem + 0.06vw, 0.8438rem); /* small  13-13.5 */
+  --step--2: 0.6875rem; /* eyebrow / meta            11      */
+
+  /* Letter-spacing tightens as type scales up, otherwise large display
+     text looks loose. */
+  --track-tight: -0.04em;
+  --track-display: -0.07em;
+  --track-label: 0.12em;
+
+  /* Card surfaces sit close to the page in lightness, so separation comes
+     from these shadows rather than a value difference. */
+  --card-shadow: 0 1px 2px rgb(38 51 44 / 0.05), 0 4px 12px rgb(38 51 44 / 0.04);
+  --card-shadow-hover: 0 2px 4px rgb(38 51 44 / 0.07), 0 14px 30px rgb(38 51 44 / 0.11);
+
+  /* Motion */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 0.2s;
+  --t-base: 0.25s;
+  --t-slow: 0.8s;
+}
+
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f6f3ec;
+  --text: #26332c;
+  --text-muted: #4f5c53;
+  --text-faint: #646e68;
+  --accent: #b8703c;
+  --border: #cfd9cf;
+  --border-soft: #d7dfd5;
+  --surface: #fdfbf7;
+  --surface-raised: #f9f0e7;
+  --on-accent: #f6f3ec;
+
+  /* Garden scene */
+  /* Sky bottom is deliberately close to the page background: the sky sits
+     behind text on every section, so it has to stay AA-safe. The darker
+     greens are reserved for the terrain, which is hero-only. */
+  --sky-top: #f6f3ec;
+  --sky-bottom: #e9efe6;
+  --hill-back: #b7ceb4;
+  --hill-front: #92b28e;
+  --grass: #6e946c;
+  --sun: #e9c987;
+  --moon: #f1e9bd;
+  --cloud: rgb(255 255 255 / 0.55);
+
+  /* Luna */
+  --dog-coat: #d3ab74;
+  --dog-shade: #b98d58;
+  --dog-dark: #4a3a28;
+  --dog-shadow: rgb(38 51 44 / 0.16);
+
+  /* Breeze */
+  --breeze: #8c9a8b;
+
+
+  --card-shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 14px rgb(0 0 0 / 0.22);
+  --card-shadow-hover: 0 2px 6px rgb(0 0 0 / 0.36), 0 16px 34px rgb(0 0 0 / 0.34);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #17231f;
+  --text: #edf1e8;
+  --text-muted: #aab8aa;
+  --text-faint: #9fb39f;
+  --accent: #e0a061;
+  --border: #30483a;
+  --border-soft: #30483a;
+  --surface: #202f27;
+  --surface-raised: #2b2a22;
+  --on-accent: #17231f;
+
+  --sky-top: #17231f;
+  --sky-bottom: #203b30;
+  --hill-back: #294438;
+  --hill-front: #21392e;
+  --grass: #587c61;
+  --sun: #e9c987;
+  --moon: #f1e9bd;
+  --cloud: rgb(205 218 199 / 0.18);
+  --breeze: #6f8873;
+  --dog-shadow: rgb(0 0 0 / 0.38);
+}
+
+/* Scroll progress published by src/scripts/garden.ts */
+:root {
+  --scene-fade: 1;
+}
+
+/* =========================================================================
+   Base
+   ========================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* =========================================================================
+   Shared primitives
+   ========================================================================= */
+
+.shell {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.eyebrow {
+  margin: 0 0 22px;
+  color: var(--text-faint);
+  font: 500 var(--step--2)/1 var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.button {
+  display: inline-flex;
+  gap: 20px;
+  align-items: center;
+  padding: 15px 20px;
+  border: 0;
+  border-radius: 100px;
+  font-family: inherit;
+  font-size: var(--step--1);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease);
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 20px rgb(38 51 44 / 0.1);
+}
+
+.button--primary {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.button--light {
+  background: #f6f3ec;
+  color: #26332c;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  font-size: var(--step--1);
+  line-height: 1;
+  transition:
+    color var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease);
+}
+
+.text-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.text-link span {
+  margin-left: 8px;
+}
+
+.section {
+  padding: var(--section-pad) var(--gutter);
+
+  /* Skip layout and paint for sections that are off-screen. The hero and
+     the first section stay eager so the initial viewport paints at once. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+.section:first-of-type,
+.hero {
+  content-visibility: visible;
+}
+
+/* =========================================================================
+   Card
+   Shared by the writing cards and the contact panel, so they read as one
+   system. Card surfaces sit close to the page in lightness, so separation
+   comes from the shadow rather than a value difference.
+   ========================================================================= */
+
+.card {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+  transition:
+    transform var(--t-base) var(--ease),
+    background var(--t-base) var(--ease),
+    border-color var(--t-base) var(--ease),
+    box-shadow var(--t-base) var(--ease);
+}
+
+.card:hover {
+  border-color: var(--text-faint);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.section-heading {
+  position: relative;
+  margin-bottom: 48px;
+}
+
+.section-heading h2,
+.about h2 {
+  margin-bottom: 0;
+  font-size: var(--step-3);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: var(--track-display);
+}
+
+.section-heading h2 em,
+.about h2 em,
+.contact h2 em,
+.hero h1 em {
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: var(--track-tight);
+}
+
+/* =========================================================================
+   Keyframes
+   ========================================================================= */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    --drift: 0px;
+  }
+  50% {
+    --drift: 28px;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-8px) rotate(8deg);
+  }
+}
+
+/* Wind lines drift right across the sky at a near-constant rate, so the
+   timing function stays close to linear with a gentle ease at each end. */
+@keyframes blow {
+  0% {
+    transform: translate3d(-30vw, 0, 0);
+  }
+  100% {
+    transform: translate3d(130vw, 0, 0);
+  }
+}
+
+/* =========================================================================
+   Reduced motion
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================================
+   Scroll cue — signals that the garden is a self-contained moment that
+   recedes as you start reading.
+   ========================================================================= */
+
+.scroll-cue {
+  position: absolute;
+  bottom: 44px;
+  left: var(--gutter);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-faint);
+  font: var(--step--2) var(--font-mono);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  transition: color var(--t-fast) var(--ease);
+}
+
+.scroll-cue:hover {
+  color: var(--accent);
+}
+
+.scroll-cue-line {
+  position: relative;
+  width: 56px;
+  height: 1px;
+  overflow: hidden;
+  background: var(--border);
+}
+
+.scroll-cue-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateX(-100%);
+  animation: cue-sweep 2.6s var(--ease) infinite;
+}
+
+@keyframes cue-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 760px) {
+  .scroll-cue {
+    bottom: 28px;
+  }
+}
