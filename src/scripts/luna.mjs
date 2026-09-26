@@ -18,17 +18,18 @@ const GROUND = 104;
  * Clockwise outline of a standing Labrador in profile, facing right.
  * Head length is held to roughly half the body length, which is what stops
  * the head reading as oversized.
+ *
+ * This outline deliberately does NOT include the tail. The tail is a separate
+ * animated element, so including it here left a static tail behind whenever
+ * the animated one wagged away from it. The outline therefore closes on the
+ * rump, and the tail is tucked far enough inside the body to stay hidden
+ * through the full wag arc.
  */
 const POINTS = [
-  // Tail: thick at the base, tapering as it sweeps up and back.
-  [5, 48],
-  [12, 58],
-  [24, 65], // tail base meets the rump
-
   // Rump, back and withers.
-  [30, 60],
-  [46, 55],
-  [64, 53],
+  [33, 54], // top of the croup, where the tail sits
+  [48, 54],
+  [64, 53], // withers
   [80, 47], // neck, back side
 
   // Skull.
@@ -53,19 +54,24 @@ const POINTS = [
   [95, GROUND],
   [84, GROUND],
 
-  // Belly. Kept high so the legs read long, rather than dachshund-short.
+  // Belly.
   [84, 70],
-  [70, 75],
-  [58, 80],
+  [68, 78],
+  [58, 86],
 
-  // Rear leg, straight to the ground.
-  [56, GROUND],
-  [44, GROUND],
+  // Hind leg, straight to the ground.
+  [58, GROUND],
+  [46, GROUND],
 
-  // Up the back of the rear leg to the rump.
-  [44, 68],
-  [32, 66],
-  [24, 65],
+  // Up the back of the hind leg and around a full haunch. The run back to
+  // the first point is what closes the body without a tail.
+  [46, 72],
+  [38, 70],
+  [32, 67],
+  // Rounded rear of the haunch, deliberately as thick as the tail base. If the
+  // rump tapers to a point the tail cannot join it without leaving a step.
+  [27, 60],
+  [30, 55],
 ];
 
 /** Catmull-Rom to cubic bezier, closed loop. */
@@ -98,9 +104,38 @@ const DARK = "var(--dog-dark)";
 
 const body = toPath(POINTS);
 
+/** Tail: a separate animated element, so the body outline above excludes it.
+ *
+ *  The base is kept strictly inside the body outline. A corner sitting `d`
+ *  units from the pivot moves by up to d*sin(wag) as the tail swings, so the
+ *  base has to be buried by more than that at both extremes of the animation
+ *  or the join opens a notch. Narrowing the base and deepening the haunch buys
+ *  that margin without a visible step. */
+const TAIL_D = "M33 64 C20 64 8 58 2 50 C1 46 4 43 7 46 C12 54 22 57 33 57 Z";
+
+/** The wagging pivot, in SVG user units. It must sit inside the haunch:
+ *  rotating about a point on the topline swings the tail's base out of the
+ *  body and opens a notch at the join. */
+const TAIL_PIVOT = [31, 60];
+
+/** Axis-aligned bounds of a path built only from M/C commands. */
+const boundsOf = (d) => {
+  const n = d.match(/-?\d*\.?\d+/g).map(Number);
+  const xs = n.filter((_, i) => i % 2 === 0);
+  const ys = n.filter((_, i) => i % 2 === 1);
+  return { x: Math.min(...xs), y: Math.min(...ys) };
+};
+
+/* transform-box: fill-box resolves transform-origin against the element's own
+ * box, so the pivot has to be converted into fill-box-relative lengths.
+ * Deriving it here means the geometry and the origin cannot drift apart. */
+const box = boundsOf(TAIL_D);
+const originX = TAIL_PIVOT[0] - box.x;
+const originY = TAIL_PIVOT[1] - box.y;
+
 export const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" focusable="false">
-  <!-- Tail: own element so it can wag. Base is tucked well inside the rump. -->
-  <path class="luna-tail" d="M33 68 C23 63 13 54 7 46 C6 42 10 40 12 43 C17 50 24 56 34 60 Z" fill="${COAT}" />
+  <!-- tail: own element so it can wag, base buried inside the haunch -->
+  <path class="luna-tail" style="transform-origin: ${originX}px ${originY}px" d="${TAIL_D}" fill="${COAT}" />
 
   <path class="luna-body" d="${body}" fill="${COAT}" />
 
