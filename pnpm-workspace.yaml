@@ -1,0 +1,6 @@
+# pnpm >=10 requires explicit opt-in for dependency build scripts.
+# These three download prebuilt platform binaries; all are official
+# deps of the Astro toolchain, so we allow them.
+allowBuilds:
+  esbuild: true
+  sharp: true

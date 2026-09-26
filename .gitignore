@@ -1,4 +1,33 @@
+# Dependencies
 node_modules/
+.pnpm-store/
+
+# Lockfiles — pnpm only
+package-lock.json
+yarn.lock
+
+# Build output
 dist/
 .astro/
 output/
+
+# Secrets — never commit real values, commit .env.example instead
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS cruft
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*~
