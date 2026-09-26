@@ -68,7 +68,6 @@
   --sky-bottom: #e9efe6;
   --hill-back: #b7ceb4;
   --hill-front: #92b28e;
-  --grass: #6e946c;
   --sun: #e9c987;
   --moon: #f1e9bd;
   --cloud: rgb(255 255 255 / 0.55);
@@ -105,7 +104,6 @@
   --sky-bottom: #203b30;
   --hill-back: #294438;
   --hill-front: #21392e;
-  --grass: #587c61;
   --sun: #e9c987;
   --moon: #f1e9bd;
   --cloud: rgb(205 218 199 / 0.18);
@@ -316,16 +314,6 @@ p {
   }
   50% {
     --drift: 28px;
-  }
-}
-
-@keyframes sway {
-  0%,
-  100% {
-    transform: rotate(-4deg);
-  }
-  50% {
-    transform: rotate(8deg);
   }
 }
 
