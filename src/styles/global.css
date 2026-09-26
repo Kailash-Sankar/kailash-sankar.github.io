@@ -245,9 +245,9 @@ p {
 
 /* =========================================================================
    Card
-   Shared by the writing cards and the contact panel, so they read as one
-   system. Card surfaces sit close to the page in lightness, so separation
-   comes from the shadow rather than a value difference.
+   Shared by the writing cards, the project cards and the contact panel, so
+   they read as one system. Card surfaces sit close to the page in lightness,
+   so separation comes from the shadow rather than a value difference.
    ========================================================================= */
 
 .card {
@@ -265,6 +265,32 @@ p {
 .card:hover {
   border-color: var(--text-faint);
   box-shadow: var(--card-shadow-hover);
+}
+
+/* The meta strip and the footer strip. Both card grids use the same two
+   rows — a faint label and an index above, tags and an arrow below — so they
+   live here rather than in one component's scoped style, which would leave
+   the other grid's copy unstyled. */
+.card-meta,
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-faint);
+  font: var(--step--2) var(--font-mono);
+}
+
+.card-footer {
+  padding-top: 28px;
+}
+
+.card-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 18px;
+  line-height: 1;
 }
 
 .section-heading {
