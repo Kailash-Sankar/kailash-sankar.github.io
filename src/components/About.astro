@@ -3,8 +3,6 @@ import { profile } from "../data/profile";
 ---
 
 <section class="section about" aria-labelledby="about-title">
-  <div class="about-mark" aria-hidden="true">✳</div>
-
   <div class="about-head">
     <!-- A real label rather than mood-setting: this is the one place the
          focus areas are stated, and labelling it makes them scannable. -->
@@ -26,16 +24,15 @@ import { profile } from "../data/profile";
 <style>
   .about {
     display: grid;
-    grid-template-columns: 0.45fr 1fr 1.15fr;
+    /* Two columns, so the heading lands on the same left edge as the hero,
+       writing and work sections. This used to be 0.45fr 1fr 1.15fr, whose
+       first column existed only to hold a decorative ✳ glyph — 21px of
+       ornament reserving ~176px of space and pushing this section's text
+       ~180px right of everything above it. */
+    grid-template-columns: 1fr 1.15fr;
     gap: 30px;
     align-items: start;
     border-top: 1px solid var(--border);
-  }
-
-  .about-mark {
-    color: var(--accent);
-    font-size: var(--step-2);
-    animation: float 5s var(--ease) infinite;
   }
 
   .about-body {
@@ -84,10 +81,6 @@ import { profile } from "../data/profile";
     .about {
       grid-template-columns: 1fr;
       gap: 28px;
-    }
-
-    .about-mark {
-      margin-bottom: -10px;
     }
   }
 </style>
