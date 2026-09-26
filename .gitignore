@@ -31,3 +31,6 @@ npm-debug.log*
 .vscode/
 *.swp
 *~
+
+# Local backup of the pre-rewrite Luna artwork
+.backup-luna/
