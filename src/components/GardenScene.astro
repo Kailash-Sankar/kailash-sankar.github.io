@@ -65,7 +65,9 @@
      the content layer: main (z-index 1) covers the whole fixed scene, so a
      click would otherwise land on the page, not on her. Pointer-fine only —
      on touch screens the right margin can sit over body copy. -->
-<button class="luna-pet" type="button" aria-label="Pet Luna"></button>
+<button class="luna-pet" type="button" aria-label="Pet Luna">
+  <span class="luna-say" aria-hidden="true"></span>
+</button>
 
 <style>
   .garden {
@@ -396,6 +398,25 @@
     }
   }
 
+  /* A bigger bounce for the escalating combo. */
+  @keyframes luna-hop-big {
+    0% {
+      transform: scaleX(-1) translateY(0) rotate(0deg);
+    }
+    25% {
+      transform: scaleX(-1) translateY(-14px) rotate(-4deg);
+    }
+    50% {
+      transform: scaleX(-1) translateY(0) rotate(0deg) scaleY(0.94);
+    }
+    72% {
+      transform: scaleX(-1) translateY(-6px) rotate(3deg);
+    }
+    100% {
+      transform: scaleX(-1) translateY(0) rotate(0deg);
+    }
+  }
+
   /* The pivot is set inline on the element, generated from the path geometry,
      so it can never drift from the drawing. */
   .luna-tail {
@@ -452,8 +473,10 @@
      petLuna.ts only restarts the animation. */
   .luna-petals {
     position: absolute;
-    left: 46%;
-    top: 18%;
+    /* Low and to her front side, so the leaves read as kicked up off the
+       ground by the bounce rather than shaken off her back. */
+    left: 38%;
+    top: 86%;
     width: 0;
     height: 0;
     pointer-events: none;
@@ -478,8 +501,8 @@
   .luna-petal:nth-child(1) {
     --petal-day: #c07a3e;
     --petal-night: #e8d09b;
-    --dx: -16px;
-    --rise: -54px;
+    --dx: -20px;
+    --rise: -22px;
     --rot: 210deg;
     --dur: 1350ms;
     --delay: 0ms;
@@ -490,8 +513,8 @@
   .luna-petal:nth-child(2) {
     --petal-day: #d9a441;
     --petal-night: #f0dcae;
-    --dx: -6px;
-    --rise: -60px;
+    --dx: -34px;
+    --rise: -30px;
     --rot: -160deg;
     --dur: 1500ms;
     --delay: 90ms;
@@ -502,8 +525,8 @@
   .luna-petal:nth-child(3) {
     --petal-day: #a4552f;
     --petal-night: #d8b877;
-    --dx: -22px;
-    --rise: -46px;
+    --dx: -14px;
+    --rise: -18px;
     --rot: 260deg;
     --dur: 1250ms;
     --delay: 180ms;
@@ -514,8 +537,8 @@
   .luna-petal:nth-child(4) {
     --petal-day: #c98a4b;
     --petal-night: #e3c98f;
-    --dx: -10px;
-    --rise: -64px;
+    --dx: -28px;
+    --rise: -26px;
     --rot: -190deg;
     --dur: 1650ms;
     --delay: 70ms;
@@ -554,6 +577,87 @@
       opacity: 0;
       transform: translate(calc(-50% + var(--dx, 0px)), var(--rise, -56px))
         rotate(var(--rot, 180deg)) scale(1);
+    }
+  }
+
+  /* --- Luna's speech bubble ------------------------------------------- */
+
+  /* Lives inside .luna-pet so it shares that layer (above the content) and is
+     hidden with it on coarse pointers. petLuna.ts sets the text and combo
+     class; these rules only drive the pop-in. */
+  .luna-say {
+    position: absolute;
+    left: 30%;
+    bottom: calc(100% + 2px);
+    z-index: 1;
+    width: max-content;
+    max-width: 150px;
+    padding: 5px 9px;
+    border-radius: 11px;
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 12px;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    text-align: center;
+    box-shadow: 0 3px 10px rgb(38 51 44 / 0.18);
+    opacity: 0;
+    transform: translateX(-50%);
+    transform-origin: 50% 100%;
+    pointer-events: none;
+  }
+
+  /* A little tail so the bubble reads as hers, not floating UI. */
+  .luna-say::after {
+    content: "";
+    position: absolute;
+    left: 30%;
+    bottom: -4px;
+    width: 9px;
+    height: 9px;
+    border-radius: 1px;
+    background: inherit;
+    transform: rotate(45deg);
+  }
+
+  .luna-say.is-talking {
+    animation: say-pop 1250ms var(--ease) forwards;
+  }
+
+  /* Reduced-motion fallback: hold it briefly instead of animating. */
+  .luna-say.is-shown {
+    opacity: 1;
+  }
+
+  /* The escalating combo lands a bigger bubble and bounce. */
+  .luna-say.is-excited {
+    font-size: 13px;
+  }
+
+  .luna.is-happy.is-excited svg {
+    animation-name: luna-hop-big;
+  }
+
+  @keyframes say-pop {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(6px) scale(0.6);
+    }
+    18% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1.06);
+    }
+    28% {
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+    72% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-6px) scale(1);
     }
   }
 
