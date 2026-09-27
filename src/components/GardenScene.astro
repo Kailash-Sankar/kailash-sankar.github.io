@@ -48,8 +48,24 @@
           <circle cx="114" cy="34" r="1.8" fill="var(--dog-dark)" />
         </g>
       </svg>
+
+    <!-- Petals for Luna's click easter egg. They live in the template (rather
+         than being created in JS) so Astro's scoped styles apply; petLuna.ts
+         only retriggers their animation. -->
+    <div class="luna-petals">
+      <span class="luna-petal"></span>
+      <span class="luna-petal"></span>
+      <span class="luna-petal"></span>
+      <span class="luna-petal"></span>
+    </div>
   </div>
 </div>
+
+<!-- Transparent hit target for Luna's click easter egg. It has to sit above
+     the content layer: main (z-index 1) covers the whole fixed scene, so a
+     click would otherwise land on the page, not on her. Pointer-fine only —
+     on touch screens the right margin can sit over body copy. -->
+<button class="luna-pet" type="button" aria-label="Pet Luna"></button>
 
 <style>
   .garden {
@@ -300,6 +316,30 @@
     width: clamp(74px, 7vw, 104px);
   }
 
+  /* Transparent click target aligned to Luna, sitting above the content
+     layer (which covers the fixed scene). */
+  .luna-pet {
+    position: fixed;
+    z-index: 2;
+    right: clamp(4px, 2.4vw, 34px);
+    bottom: 19%;
+    width: clamp(74px, 7vw, 104px);
+    aspect-ratio: 152 / 118;
+    padding: 0;
+    border: 0;
+    background: none;
+    border-radius: 8px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* On touch screens the margin can overlap body copy, so leave her be. */
+  @media (pointer: coarse) {
+    .luna-pet {
+      display: none;
+    }
+  }
+
   /* Her own ground, so she stays planted once the hills recede. */
   .luna-ground {
     position: absolute;
@@ -323,6 +363,37 @@
        pivot and the head/ear transform-origins all mirror with it. */
     transform: scaleX(-1);
     filter: drop-shadow(0 4px 6px rgb(38 51 44 / 0.12));
+  }
+
+  /* --- Luna's click easter egg ---------------------------------------- */
+
+  /* Hop the drawing, not the wrapper, so her ground shadow stays put. The
+     static scaleX(-1) mirror has to be repeated in every frame. */
+  .luna.is-happy svg {
+    animation: luna-hop 700ms var(--ease);
+  }
+
+  /* A burst of wagging while she is happy. */
+  .luna.is-happy .luna-tail {
+    animation-duration: 0.3s;
+  }
+
+  @keyframes luna-hop {
+    0% {
+      transform: scaleX(-1) translateY(0) rotate(0deg);
+    }
+    30% {
+      transform: scaleX(-1) translateY(-9px) rotate(-2deg);
+    }
+    55% {
+      transform: scaleX(-1) translateY(0) rotate(0deg) scaleY(0.97);
+    }
+    78% {
+      transform: scaleX(-1) translateY(-3px) rotate(1.5deg);
+    }
+    100% {
+      transform: scaleX(-1) translateY(0) rotate(0deg);
+    }
   }
 
   /* The pivot is set inline on the element, generated from the path geometry,
@@ -376,6 +447,116 @@
     }
   }
 
+  /* Leaves that tumble up when Luna is petted. Per-petal size, colour, path
+     and timing live on the :nth-child rules below so the cluster fans out;
+     petLuna.ts only restarts the animation. */
+  .luna-petals {
+    position: absolute;
+    left: 46%;
+    top: 18%;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .luna-petal {
+    position: absolute;
+    width: 9px;
+    height: 12px;
+    /* Opposite corners rounded, so a square reads as a leaf/petal. */
+    border-radius: 100% 0 100% 0;
+    background: var(--petal-day, #c07a3e);
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+
+  /* Warm leaves against the daylight sky; luminous petals once it is dark. */
+  :global([data-theme="dark"]) .luna-petal {
+    background: var(--petal-night, #e8d09b);
+  }
+
+  .luna-petal:nth-child(1) {
+    --petal-day: #c07a3e;
+    --petal-night: #e8d09b;
+    --dx: -16px;
+    --rise: -54px;
+    --rot: 210deg;
+    --dur: 1350ms;
+    --delay: 0ms;
+    width: 10px;
+    height: 13px;
+  }
+
+  .luna-petal:nth-child(2) {
+    --petal-day: #d9a441;
+    --petal-night: #f0dcae;
+    --dx: -6px;
+    --rise: -60px;
+    --rot: -160deg;
+    --dur: 1500ms;
+    --delay: 90ms;
+    width: 8px;
+    height: 11px;
+  }
+
+  .luna-petal:nth-child(3) {
+    --petal-day: #a4552f;
+    --petal-night: #d8b877;
+    --dx: -22px;
+    --rise: -46px;
+    --rot: 260deg;
+    --dur: 1250ms;
+    --delay: 180ms;
+    width: 11px;
+    height: 9px;
+  }
+
+  .luna-petal:nth-child(4) {
+    --petal-day: #c98a4b;
+    --petal-night: #e3c98f;
+    --dx: -10px;
+    --rise: -64px;
+    --rot: -190deg;
+    --dur: 1650ms;
+    --delay: 70ms;
+    width: 8px;
+    height: 10px;
+  }
+
+  /* Reduced-motion fallback: the global reset zeroes animation durations, so
+     petLuna.ts reveals the petals statically, pre-spread, instead. */
+  .luna-petal.is-shown {
+    opacity: 1;
+    transform: translate(
+        calc(-50% + var(--dx, 0px) * 0.6),
+        calc(var(--rise, -56px) * 0.6)
+      )
+      rotate(var(--rot, 0deg));
+  }
+
+  .luna-petal.is-animating {
+    animation: petal-rise var(--dur, 1400ms) var(--ease) forwards;
+    animation-delay: var(--delay, 0ms);
+  }
+
+  @keyframes petal-rise {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, 0) rotate(0deg) scale(0.55);
+    }
+    15% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(calc(-50% + var(--dx, 0px)), var(--rise, -56px))
+        rotate(var(--rot, 180deg)) scale(1);
+    }
+  }
+
   @media (max-width: 760px) {
     .garden-sun {
       right: -60px;
@@ -383,7 +564,8 @@
       height: 150px;
     }
 
-    .luna {
+    .luna,
+    .luna-pet {
       bottom: 15%;
       width: 78px;
     }
